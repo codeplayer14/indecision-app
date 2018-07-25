@@ -1,86 +1,69 @@
 'use strict';
 
-console.log('App.js is running!');
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var app = {
-  title: 'Indecision App',
-  subtitle: 'Put your life in the hands of a computer',
-  options: ['Option One', 'Option two']
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var onFormSubmit = function onFormSubmit(e) {
-  e.preventDefault();
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-  var option = e.target.elements.option.value;
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-  if (option) {
-    app.options.push(option);
-    e.target.elements.option.value = '';
-    render();
-  }
-};
+var VisibilityToggle = function (_React$Component) {
+    _inherits(VisibilityToggle, _React$Component);
 
-var onRemoveAll = function onRemoveAll() {
-  app.options = [];
-  render();
-};
+    function VisibilityToggle(props) {
+        _classCallCheck(this, VisibilityToggle);
+
+        var _this = _possibleConstructorReturn(this, (VisibilityToggle.__proto__ || Object.getPrototypeOf(VisibilityToggle)).call(this, props));
+
+        _this.handleToggleVisibility = _this.handleToggleVisibility.bind(_this);
+        _this.state = {
+            visibility: false
+        };
+        return _this;
+    }
+
+    _createClass(VisibilityToggle, [{
+        key: 'handleToggleVisibility',
+        value: function handleToggleVisibility() {
+
+            this.setState(function (prevState) {
+
+                return {
+                    visibility: !prevState.visibility
+                };
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+
+            return React.createElement(
+                'div',
+                null,
+                React.createElement(
+                    'h1',
+                    null,
+                    'Visibility Toggle'
+                ),
+                React.createElement(
+                    'button',
+                    { onClick: this.handleToggleVisibility },
+                    ' ',
+                    this.state.visibility ? 'Hide Details' : 'Show Details'
+                ),
+                this.state.visibility && React.createElement(
+                    'p',
+                    null,
+                    ' Here are some details'
+                )
+            );
+        }
+    }]);
+
+    return VisibilityToggle;
+}(React.Component);
 
 var appRoot = document.getElementById('app');
 
-var render = function render() {
-  var template = React.createElement(
-    'div',
-    null,
-    React.createElement(
-      'h1',
-      null,
-      app.title
-    ),
-    app.subtitle && React.createElement(
-      'p',
-      null,
-      app.subtitle
-    ),
-    React.createElement(
-      'p',
-      null,
-      app.options.length > 0 ? 'Here are your options' : 'No options'
-    ),
-    React.createElement(
-      'p',
-      null,
-      app.options.length
-    ),
-    React.createElement(
-      'button',
-      { onClick: onRemoveAll },
-      'Remove All'
-    ),
-    React.createElement(
-      'ol',
-      null,
-      app.options.map(function (option) {
-
-        return React.createElement(
-          'li',
-          { key: option },
-          option
-        );
-      })
-    ),
-    React.createElement(
-      'form',
-      { onSubmit: onFormSubmit },
-      React.createElement('input', { type: 'text', name: 'option' }),
-      React.createElement(
-        'button',
-        null,
-        'Add Option'
-      )
-    )
-  );
-
-  ReactDOM.render(template, appRoot);
-};
-
-render();
+ReactDOM.render(React.createElement(VisibilityToggle, null), appRoot);
